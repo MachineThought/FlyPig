@@ -148,7 +148,7 @@ class ParseHtml:
 
     # 执行主程序
     def main(self, filename):
-       return self.parse_page(self.read_file(filename))
+        return self.parse_page(self.read_file(filename))
 
 
 if __name__ == "__main__":
