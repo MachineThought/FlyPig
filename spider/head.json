@@ -1,0 +1,14 @@
+{
+  ":authority": "tdskip.alitrip.com",
+  ":method": "GET",
+  ":path": "/initItemDetail.do?itemId=40609001098&key&u_channel=&i_channel=&ref=&t_trace_id=&t_trace_q=&spm=181.7738645.6.5.qDUWvE&_ksTS=1493180286711_133&callback=jsonp134",
+  ":scheme": "https",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate, sdch, br",
+  "accept-language": "zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4,it;q=0.2",
+  "cache-control": "no-cache",
+  "cookie": "hng=CN%7Czh-cn%7CCNY; _tb_token_=1xuzFAY3hwI9; uss=AC4JH05gjmjUbBBrWNHbTfT3roMRdX689%2BvtZw59oCJINaHd6cSz0Qf2; tracknick=leekona; cookie2=23047a24a0082071f57fa5261e566302; skt=f799b7ab1b3f9cb1; t=1b103ff8ae6035d023fe5d06f72e8651; cna=NZMpEDkX83oCAXJhyNCKzeCE; l=Av//h4DXg9ODcX5xcQBSXvqfD9mJ5FOG; isg=AgUFcMEV8IRsadUlO0N2f5FwFEEI_7lUui1tVAdqwTxLniUQzxLJJJM23nWS"
+  "pragma": "no-cache",
+  "referer": "https://items.fliggy.com/item.htm?spm=181.7738645.6.5.qDUWvE&id=40609001098",
+  "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.98 Safari/537.36"
+}
