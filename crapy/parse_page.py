@@ -19,17 +19,45 @@ class ParseHtml:
     # 解析html页面
     def parse_page(self, page):
         bs_page = BeautifulSoup(page, self.parse_type)
-        self.parse_shop(bs_page)
-        self.parse_sell(bs_page)
-        self.parse_prop(bs_page)
+        try:
+            self.parse_shop(bs_page)
+        except Exception as err:
+            print("解析商店信息出错：%s " % err)
+            return {"message": "error"}
+        try:
+            self.parse_sell(bs_page)
+        except Exception as err:
+            print("解析销售信息出错：%s " % err)
+            return {"message": "error"}
+        try:
+            self.parse_prop(bs_page)
+        except Exception as err:
+            print("解析商品信息出错：%s " % err)
+            return {"message": "error"}
+        print(self.parse_data)
+        return self.parse_data
 
     # 解析店铺信息
     def parse_shop(self, bs_page):
+        shop_data = {}
+        info = []
         shop_info = bs_page.select("#J_HShopInfo")
         if len(shop_info) == 0:
             print("无商店信息")
             return
+        sorces = bs_page.select(".h-shopcard-scores a")
+        self.parse_data["descSorce"] = float(str(sorces[0].text).strip())
+        self.parse_data["serverSorce"] = float(str(sorces[1].text).strip())
+        self.parse_data["logisticsScore"] = float(str(sorces[2].text).strip())
 
+        company_info = bs_page.select(".h-shopcard-seller > dd")
+        for company in company_info:
+            temp = str(company.text).strip().split("：")[1]
+            if temp != "":
+                info.append(temp)
+        self.parse_data["shopName"] = info[0]
+        self.parse_data["company"] = info[1]
+        self.parse_data["location"] = info[2]
 
     # 解析销售信息
     def parse_sell(self, bs_page):
@@ -40,21 +68,21 @@ class ParseHtml:
         sell_count = bs_page.find("em", {"class": "ml J_SellCount"}).text
         grade = bs_page.find("em", {"class": "J_Grade"}).text
         comment = bs_page.find("span", {"class": "J_Comment"}).text
-        # mboth = bs.find("em", {"class": "mboth"}).text
+        # 校验销量
         if sell_count == "":
             self.parse_data["sellCount"] = 0
         else:
             self.parse_data["sellCount"] = int(sell_count)
+        # 校验评分
         if grade == "--":
             self.parse_data["grade"] = 0
         else:
             self.parse_data["grade"] = float(grade)
+        # 校验评论
         if comment == "":
             self.parse_data["comment"] = 0
         else:
             self.parse_data["comment"] = int(comment)
-        print(self.parse_data)
-        return self.parse_data
 
     # 解析出发地,目的地,天数等数据
     def parse_prop(self, bs_page):
@@ -98,29 +126,29 @@ class ParseHtml:
                         value += text
             prop[key.strip()] = value.strip()
             index += 1
-        print(prop)
-        return self.field_asign(prop)
+        self.field_asign(prop)
 
     # 解析出来的商品信息不一定每个都有,所以只选择有的字段进行赋值
     def field_asign(self, prop):
         prop_data = {"fromCity": "", "destCity": "", "days": "", "proInclude": "", "promise": ""}
         for item in prop:
             if item == "出发地":
-                self.parse_data["fromCity"] = prop[item]
+                prop_data["fromCity"] = prop[item]
             elif item == "目的地":
-                self.parse_data["destCity"] = prop[item]
+                prop_data["destCity"] = prop[item]
             elif item == "行程天数":
-                self.parse_data["days"] = prop[item]
+                prop_data["days"] = prop[item]
             elif item == "商品包含":
-                self.parse_data["proInclude"] = prop[item]
+                prop_data["proInclude"] = prop[item]
             elif item == "服务承诺":
-                self.parse_data["promise"] = prop[item]
-        print(self.parse_data)
-        return self.parse_data
+                prop_data["promise"] = prop[item]
+        # 以上的信息不一定每个都有，所以为了安全做以下操作
+        for data in prop_data:
+            self.parse_data[data] = prop_data[data]
 
     # 执行主程序
     def main(self, filename):
-        self.parse_page(self.read_file(filename))
+       return self.parse_page(self.read_file(filename))
 
 
 if __name__ == "__main__":
