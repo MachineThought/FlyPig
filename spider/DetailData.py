@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import urllib.request
-import urllib.parse
 import random
 import re
 import time
@@ -158,9 +156,9 @@ class DetailSpider():
         # firefox_login.find_element_by_id('J_Quick2Static').click()
         # firefox_login.find_element_by_class_name("login-switch").click()
         self.broswer_client.find_element_by_id('TPL_username_1').clear()
-        self.broswer_client.find_element_by_id('TPL_username_1').send_keys(u'leekona')
+        self.broswer_client.find_element_by_id('TPL_username_1').send_keys(u'5541')
         self.broswer_client.find_element_by_id('TPL_password_1').clear()
-        self.broswer_client.find_element_by_id('TPL_password_1').send_keys(u'41751')
+        self.broswer_client.find_element_by_id('TPL_password_1').send_keys(u'455')
         time.sleep(random.randint(10, 15))
         self.broswer_client.find_element_by_id('J_SubmitStatic').click()
         time.sleep(random(2, 4))

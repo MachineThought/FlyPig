@@ -2,7 +2,7 @@
 
 import pymysql
 
-from spider.writelog import *
+# from spider.writelog import *
 
 # 获取数据库连接
 db = pymysql.connect(host="192.168.1.11", port=3306, user="root", passwd="root", db="fly_pig")
@@ -21,7 +21,7 @@ def excute_sql(sql):
         db.commit()
         return 1
     except:
-        wirte_log("執行SQL失败:\n\t" + sql)
+        print("執行SQL失败:\n\t" + sql)
         db.rollback()
         return -1
 
@@ -40,7 +40,7 @@ def get_bigger_column(table_name, column):
         else:
             max_index = max_index + 1
     except:
-        wirte_log("查询最大数出错")
+        print("查询最大数出错")
 
     return max_index
 
@@ -80,7 +80,7 @@ def insert_city_item(city_item, city_id):
         else:
             unsuccess = unsuccess + 1
 
-    wirte_log("线路 " + city_item + " " + city_id + " 添加成功,成功:" + success + "  失败:" + unsuccess)
+        print("线路 " + city_item + " " + city_id + " 添加成功,成功:" + success + "  失败:" + unsuccess)
 
 
 # 查询未完成的中数目
@@ -91,8 +91,9 @@ def query_no_item_count():
         cursor.execute(count_sql)
         for row in cursor.fetchall():
             count = row[0]
-    except:
-        wirte_log("查询总数失败")
+    except Exception as err:
+        print(err)
+        print("查询总数失败")
     return count
 
 
@@ -105,8 +106,9 @@ def query_no_item(sql, limit=10):
         for row in cursor.fetchall():
             items.append(row[0])
         return items
-    except:
-        wirte_log("查询未完成记录出错")
+    except Exception as err:
+        print(err)
+        print("查询未完成记录出错")
         return items
 
 

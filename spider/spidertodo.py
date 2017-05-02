@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import time
-
 from spider.DetailData import DetailSpider
 from spider.FlyPigSpider import *
 from spider.dboprate import *
@@ -12,7 +10,6 @@ from spider.dboprate import *
 def spider_items():
     dest = insert_dest(dest_list())
     for item in dest:
-        # print(item)
         insert_city_item(list_travel_city(item["cityName"]), int(item["id"]))
 
 
@@ -24,19 +21,19 @@ def generate_period(total):
 # 休眠时间
 def wait_time(sleep_time):
     if sleep_time >= 0:
-        sleep_time = 0
+        sleep_time = 5
     while True:
         if sleep_time <= 0:
             return
-        wirte_log(sleep_time)
-        time.sleep(0)
+        print(sleep_time)
+        time.sleep(5)
         sleep_time = sleep_time - 5
 
 
 # 详细信息爬取并入库
 def complete_detail_info(items,detail_spider, params):
     for item in items:
-        wirte_log("开始请求数据--" + item)
+        print("开始请求数据--" + item)
         flag = 1
         detail_data = detail_spider.spider(item)
         if len(detail_data) <= 0:
@@ -51,8 +48,8 @@ def complete_detail_info(items,detail_spider, params):
             params["except_total"] = params["except_total"] + 1
             params["period"] = params["period"] + generate_period(params["except_total"])
 
-        wirte_log("下次请求间隔时间: " + str(params["period"]) + "s")
-        wait_time(params["period"])
+        print("下次请求间隔时间: " + str(params["period"]) + "s")
+        wait_time(5)
     return params
 
 
@@ -63,7 +60,7 @@ def do_spider(times=5):
     while times > 0:
         total = query_no_item_count()
         if total > 0:
-            items = query_no_item_normal(5)
+            items = query_no_item_rand(10)
             print(items)
             params = complete_detail_info(items,detail_spider, params)
         else:
@@ -72,4 +69,5 @@ def do_spider(times=5):
 
 
 # complete_detail_info(["40609001098", "40609001098"],{"period": 5, "except_total": 0})
-do_spider(10)
+if __name__ == "__main__":
+    do_spider(10000)

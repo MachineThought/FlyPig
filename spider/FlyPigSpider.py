@@ -2,13 +2,14 @@
 
 import json
 import re
+import time
 import urllib
 import urllib.parse
 import urllib.request
 
 from bs4 import BeautifulSoup
 
-from spider.writelog import *
+# from spider.writelog import *
 
 
 def dest_list():
@@ -131,7 +132,7 @@ def detail_travle(path_id):
 
     request = urllib.request.Request(str(detail_travle_url + "?" + str(params[1:])))
 
-    wirte_log(request.full_url)
+    print(request.full_url)
     for key in headers:
         request.add_header(key, headers[key])
 
