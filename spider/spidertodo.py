@@ -68,6 +68,5 @@ def do_spider(times=5):
         times = times - 1
 
 
-# complete_detail_info(["40609001098", "40609001098"],{"period": 5, "except_total": 0})
 if __name__ == "__main__":
     do_spider(10000)

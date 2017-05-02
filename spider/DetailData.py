@@ -185,7 +185,7 @@ class DetailSpider():
             current_url = self.broswer_client.current_url
             if current_url.find("login") > 0:
                 self.reboot()
-                self.sleep(60, 20)
+                self.sleep(120, 20)
             return {}
 
         print("打印解析后的数据")
